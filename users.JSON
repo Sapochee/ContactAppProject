@@ -1,0 +1,39 @@
+{
+  "logins": [
+    {
+      "username": "jacob123",
+      "password": "Racoon45",
+      "addressBook": []
+    },
+    {
+      "username": "adam28",
+      "password": "Terrapin12",
+      "addressBook": []
+    },
+    {
+      "username": "john88",
+      "password": "UMD22",
+      "addressBook": []
+    },
+    {
+      "username": "caleb87",
+      "password": "Stamp832",
+      "addressBook": []
+    },
+    {
+      "username": "John",
+      "password": "BLAH",
+      "addressBook": []
+    },
+    {
+      "username": "Nder",
+      "password": "BLAH",
+      "addressBook": []
+    },
+    {
+      "username": "Jacob",
+      "password": "Nadder123",
+      "addressBook": []
+    }
+  ]
+}
