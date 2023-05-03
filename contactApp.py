@@ -6,29 +6,27 @@ import json
 class Application():
     """Class to create the gui
     """
-    def __init__(self):
-        self.window = tkinter.Tk()
+    def __init__(self, window):
+        self.window = window
         self.window.title("Contact Book")
 
-        self.label_username = tkinter.Label(self.window, text="Username")
-        self.label_username.grid(row=0, column=0)
+        self.label_username = tkinter.Label(window, text = "Username")
+        self.label_username.grid(row = 0, column = 0)
 
-        self.entry_username = tkinter.Entry(self.window)
-        self.entry_username.grid(row=0, column=1)
+        self.entry_username = tkinter.Entry(window)
+        self.entry_username.grid(row = 0, column = 1)
 
-        self.label_password = tkinter.Label(self.window, text="Password")
-        self.label_password.grid(row=1, column=0)
+        self.label_password = tkinter.Label(window, text = "Password")
+        self.label_password.grid(row = 1, column = 0)
 
-        self.entry_password = tkinter.Entry(self.window, show="*")
-        self.entry_password.grid(row=1, column=1)
+        self.entry_password = tkinter.Entry(window, show = "*")
+        self.entry_password.grid(row = 1, column = 1)
 
-        self.button_login = tkinter.Button(self.window, text="Login", command=self.login)
-        self.button_login.grid(row=2, column=0)
+        self.button_login = tkinter.Button(window, text = "Login")
+        self.button_login.grid(row = 2, column = 0)
 
-        self.button_signup = tkinter.Button(self.window, text="Sign Up", command=self.signup)
-        self.button_signup.grid(row=2, column=1)
-
-        self.window.mainloop()
+        self.button_signup = tkinter.Button(window, text = "Sign Up")
+        self.button_signup.grid(row = 2, column = 1)
     
     def createWidgets(self):
         pass    
@@ -113,6 +111,10 @@ def save_data():
 
 def main():
     pass
+
+root = tkinter.Tk()
+gui = Application(root)
+root.mainloop()
 
 #Tests to implement
 """
