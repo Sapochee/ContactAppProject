@@ -7,7 +7,28 @@ class Application():
     """Class to create the gui
     """
     def __init__(self):
-        pass
+        self.window = tkinter.Tk()
+        self.window.title("Contact Book")
+
+        self.label_username = tkinter.Label(self.window, text="Username")
+        self.label_username.grid(row=0, column=0)
+
+        self.entry_username = tkinter.Entry(self.window)
+        self.entry_username.grid(row=0, column=1)
+
+        self.label_password = tkinter.Label(self.window, text="Password")
+        self.label_password.grid(row=1, column=0)
+
+        self.entry_password = tkinter.Entry(self.window, show="*")
+        self.entry_password.grid(row=1, column=1)
+
+        self.button_login = tkinter.Button(self.window, text="Login", command=self.login)
+        self.button_login.grid(row=2, column=0)
+
+        self.button_signup = tkinter.Button(self.window, text="Sign Up", command=self.signup)
+        self.button_signup.grid(row=2, column=1)
+
+        self.window.mainloop()
     
     def createWidgets(self):
         pass    
