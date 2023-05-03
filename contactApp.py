@@ -60,8 +60,7 @@ class User:
            json.dump(data,f, indent=2)
 
 class Contact:
-    """Defines an individual contact and the details that are included in the contact
-    """
+    """Defines an individual contact and the details that are included in the contact"""
     def __init__(self, FirstName, LastName, number, address, email):
         self.FirstName = FirstName
         self.LastName = LastName
@@ -69,17 +68,32 @@ class Contact:
         self.address = address
         self.email = email
     
-    def add_contact():
-        pass
+    def add_contact(self, contact):
+        """Adds a contact to the list"""
+        contact.append(self)
     
-    def edit_contact():
-        pass
+    def edit_contact(self, contact, field, value):
+        """Edit a field of the contact with a new value"""
+        if field  == 'FirstName':
+            self.FirstName = value
+        elif field == 'LastName':
+            self.LastName = value
+        elif field == 'number':
+            self.number = value
+        elif field == 'address':
+            self.number = value
+        elif field == 'email':
+            self.email = value
     
-    def delete_contact():
-        pass
+    def delete_contact(self, contact):
+        """Delete the contact"""
+        contacts.remove(self)
     
-    def search_contact():
-        pass
+    def search_contact(self, query):
+        """Return True if the contact matches the query, False otherwise"""
+        return (query in self.first_name or query in self.last_name or
+                query in self.number or query in self.address or
+                query in self.email)
     
     pass
 
