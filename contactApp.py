@@ -3,7 +3,7 @@ import sqlite3
 import re
 import json
 
-class Application():
+class LoginApplication():
     """Class to create the gui
     """
     def __init__(self, window):
@@ -22,10 +22,10 @@ class Application():
         self.entry_password = tkinter.Entry(window, show = "*")
         self.entry_password.grid(row = 1, column = 1)
 
-        self.button_login = tkinter.Button(window, text = "Login")
+        self.button_login = tkinter.Button(window, text = "Login", command = User.login())
         self.button_login.grid(row = 2, column = 0)
 
-        self.button_signup = tkinter.Button(window, text = "Sign Up")
+        self.button_signup = tkinter.Button(window, text = "Sign Up", command = User.signUp())
         self.button_signup.grid(row = 2, column = 1)
     
     def createWidgets(self):
@@ -36,15 +36,19 @@ class User:
     """
     def __init__(self):
         pass
+    
     def login(self, username, password):
         """Checks to see if username and password match to any existing user"""
         f = open('users.json', 'r')
         data = json.loads(f.read())
         for login in data['logins']:
             if login['username'] == username and login['password'] == password:
-                return login
-        return None
-        
+                self.window.destroy()
+                root = tkinter.TK()
+                contactGUI = BookGUI(root)
+                root.mainloop()
+            else:
+                tkinter.messagebox.showerror("Error", "Incorrect username or Password")        
     
     def signUp(self, username, password):
         """Registers the login information into database unless username already exists
@@ -58,6 +62,14 @@ class User:
         data['logins'].append(newUser)
         with open('users.json', 'w') as f:
            json.dump(data,f, indent=2)
+           
+class BookGUI:
+    def __init__(self, window):
+        self.window = window
+        self.window.title("Contact Book")
+        
+    def widgets(self):
+        pass
 
 class Contact:
     """Defines an individual contact and the details that are included in the contact"""
@@ -87,7 +99,7 @@ class Contact:
     
     def delete_contact(self, contact):
         """Delete the contact"""
-        contacts.remove(self)
+        contact.remove(self)
     
     def search_contact(self, query):
         """Return True if the contact matches the query, False otherwise"""
@@ -127,7 +139,7 @@ def main():
     pass
 
 root = tkinter.Tk()
-gui = Application(root)
+gui = LoginApplication(root)
 root.mainloop()
 
 #Tests to implement
