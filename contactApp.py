@@ -93,7 +93,7 @@ class Contact:
         elif field == 'number':
             self.number = value
         elif field == 'address':
-            self.number = value
+            self.address = value
         elif field == 'email':
             self.email = value
     
