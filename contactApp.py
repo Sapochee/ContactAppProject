@@ -22,10 +22,10 @@ class LoginApplication():
         self.entry_password = tkinter.Entry(window, show = "*")
         self.entry_password.grid(row = 1, column = 1)
 
-        self.button_login = tkinter.Button(window, text = "Login", command = User.login())
+        self.button_login = tkinter.Button(window, text = "Login", command = User.login(self, self.label_username, self.label_password))
         self.button_login.grid(row = 2, column = 0)
 
-        self.button_signup = tkinter.Button(window, text = "Sign Up", command = User.signUp())
+        self.button_signup = tkinter.Button(window, text = "Sign Up", command = User.signUp(self, self.label_username, self.label_password))
         self.button_signup.grid(row = 2, column = 1)
     
     def createWidgets(self):
@@ -44,11 +44,11 @@ class User:
         for login in data['logins']:
             if login['username'] == username and login['password'] == password:
                 self.window.destroy()
-                root = tkinter.TK()
+                root = tkinter.Tk()
                 contactGUI = BookGUI(root)
                 root.mainloop()
             else:
-                tkinter.messagebox.showerror("Error", "Incorrect username or Password")        
+                tkinter.Message("Error", "Incorrect username or Password")        
     
     def signUp(self, username, password):
         """Registers the login information into database unless username already exists
@@ -139,8 +139,8 @@ def main():
     pass
 
 root = tkinter.Tk()
-gui = LoginApplication(root)
-root.mainloop()
+login_app = LoginApplication(root)
+login_app.mainloop()
 
 #Tests to implement
 """
