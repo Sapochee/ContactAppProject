@@ -1,35 +1,44 @@
+from tkinter import *
 import tkinter
 import sqlite3
 import re
 import json
 
-class LoginApplication():
+def MainApplication():
     """Class to create the gui
     """
-    def __init__(self, window):
-        self.window = window
-        self.window.title("Contact Book")
-
-        self.label_username = tkinter.Label(window, text = "Username")
-        self.label_username.grid(row = 0, column = 0)
-
-        self.entry_username = tkinter.Entry(window)
-        self.entry_username.grid(row = 0, column = 1)
-
-        self.label_password = tkinter.Label(window, text = "Password")
-        self.label_password.grid(row = 1, column = 0)
-
-        self.entry_password = tkinter.Entry(window, show = "*")
-        self.entry_password.grid(row = 1, column = 1)
-
-        self.button_login = tkinter.Button(window, text = "Login", command = User.login(self, self.label_username, self.label_password))
-        self.button_login.grid(row = 2, column = 0)
-
-        self.button_signup = tkinter.Button(window, text = "Sign Up", command = User.signUp(self, self.label_username, self.label_password))
-        self.button_signup.grid(row = 2, column = 1)
+    global application
+    application = Tk()
+    application.geometry("300x250")
+    application.title("Contact Book")
+    Label(text="Select Your Choice", bg="blue", width="300", height="2", font=("Calibri", 13)).pack()
+    Label(text="").pack()
+    Button(text="Login", height="2", width="30", command = User.login).pack()
+    Label(text="").pack()
+    Button(text="Register", height="2", width="30", command = User.signUp).pack()
     
-    def createWidgets(self):
-        pass    
+    application.mainloop()
+    
+""" reference code for the username, password that has not been implemented yet (used previously)
+
+    label_username = tkinter.Label(application, text = "Username")
+    label_username.grid(row = 0, column = 0)
+
+    entry_username = tkinter.Entry(application)
+    entry_username.grid(row = 0, column = 1)
+
+    label_password = tkinter.Label(application, text = "Password")
+    label_password.grid(row = 1, column = 0)
+
+    entry_password = tkinter.Entry(application, show = "*")
+    entry_password.grid(row = 1, column = 1)
+
+    button_login = tkinter.Button(application, text = "Login", command = User.login(self, self.label_username, self.label_password))
+    button_login.grid(row = 2, column = 0)
+
+    button_signup = tkinter.Button(application, text = "Sign Up", command = User.signUp(self, self.label_username, self.label_password))
+    button_signup.grid(row = 2, column = 1)   
+"""
     
 class User:
     """Defines the user account with a login information and the corresponding address book for the account
@@ -135,12 +144,7 @@ def save_data():
     """
     pass
 
-def main():
-    pass
-
-root = tkinter.Tk()
-login_app = LoginApplication(root)
-login_app.mainloop()
+MainApplication()
 
 #Tests to implement
 """
