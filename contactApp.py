@@ -191,6 +191,8 @@ class AddressBook(tk.Frame):
         edit_button.pack(side="top", pady=10)
         delete_button = tk.Button(self, text="Delete Contact", command=Contact.delete_contact)
         delete_button.pack(side="top", pady=10)
+        home = tk.Button(self, text="Home", command=lambda: controller.show_frame(StartPage))
+        home.pack(side="top", pady=10)
         
         # Load the contacts from the user's address book
         self.sync_contacts()
