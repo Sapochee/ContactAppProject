@@ -34,6 +34,11 @@
       "username": "Jacob",
       "password": "Nadder123",
       "addressBook": []
+    },
+    {
+      "username": "testing",
+      "password": "test123",
+      "addressBook": []
     }
   ]
 }
