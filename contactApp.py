@@ -201,20 +201,10 @@ class AddressBook(tk.Frame):
         with open('users.json', 'r') as f:
             data = json.load(f)
 
-def parse_input():
-    """Parses and matches the user input for searching contacts
-    """
-    pass
-
-def load_data():
-    """Loads the address book from a data source corresponding to user
-    """
-    pass
-
-def save_data():
-    """Saves the address book to a data source corresponding to user
-    """
-    pass
+    def parse_input():
+        """Parses and matches the user input for searching contacts
+        """
+        pass
 
 app = Main()
 app.mainloop()
