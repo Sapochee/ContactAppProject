@@ -1,84 +1,131 @@
 from tkinter import *
-import tkinter
-import sqlite3
-import re
+import tkinter as tk
 import json
 
-def MainApplication():
-    """Class to create the gui
-    """
-    global application
-    application = Tk()
-    application.geometry("300x250")
-    application.title("Contact Book")
-    Label(text="Select Your Choice", bg="blue", width="300", height="2", font=("Calibri", 13)).pack()
-    Label(text="").pack()
-    Button(text="Login", height="2", width="30", command = User.login).pack()
-    Label(text="").pack()
-    Button(text="Register", height="2", width="30", command = User.signUp).pack()
+LARGE_FONT= ("Verdana", 18)
+
+class Main(tk.Tk):
+    def __init__(self, *args, **kwargs):
+        tk.Tk.__init__(self, *args, **kwargs)
+        container = tk.Frame(self)
+
+        container.pack(side="top", fill="both", expand = True)
+       
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
+
+        self.frames = {}
+
+        for F in (StartPage, LoginPage, SignUpPage):
+            frame = F(container, self)
+            self.frames[F] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
+
+        self.show_frame(StartPage)
     
-    application.mainloop()
+    def show_frame(self, cont):
+        frame = self.frames[cont]
+        frame.tkraise()
+        
+class StartPage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self,parent)
+        label = tk.Label(self, text="Contact Book", font=LARGE_FONT)
+        label.pack(pady=20,padx=10)
+        
+        button = tk.Button(self, text="Log-In", command=lambda: controller.show_frame(LoginPage))
+        
+        button.pack()
+        
+        button2 = tk.Button(self, text="Sign-Up", command=lambda: controller.show_frame(SignUpPage))
+        
+        button2.pack()
     
-""" reference code for the username, password that has not been implemented yet (used previously)
-
-    label_username = tkinter.Label(application, text = "Username")
-    label_username.grid(row = 0, column = 0)
-
-    entry_username = tkinter.Entry(application)
-    entry_username.grid(row = 0, column = 1)
-
-    label_password = tkinter.Label(application, text = "Password")
-    label_password.grid(row = 1, column = 0)
-
-    entry_password = tkinter.Entry(application, show = "*")
-    entry_password.grid(row = 1, column = 1)
-
-    button_login = tkinter.Button(application, text = "Login", command = User.login(self, self.label_username, self.label_password))
-    button_login.grid(row = 2, column = 0)
-
-    button_signup = tkinter.Button(application, text = "Sign Up", command = User.signUp(self, self.label_username, self.label_password))
-    button_signup.grid(row = 2, column = 1)   
-"""
-    
-class User:
+class LoginPage(tk.Frame):
     """Defines the user account with a login information and the corresponding address book for the account
     """
-    def __init__(self):
-        pass
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Enter login information:", font=LARGE_FONT)
+        label.pack(pady=10,padx=10)
+        
+        self.username_entry = tk.Entry(self)
+        self.username_entry.pack(pady=5, padx=10)
+
+        self.password_entry = tk.Entry(self, show='*')
+        self.password_entry.pack(pady=5, padx=10)
+        
+        login_button = tk.Button(self, text="Login", command=self.login)
+        login_button.pack(pady=5, padx=10)
+        
+        alt_button = tk.Button(self, text="Sign-Up Page", command=lambda: controller.show_frame(SignUpPage))
+        
+        alt_button.pack()
     
-    def login(self, username, password):
+    def login(self):
         """Checks to see if username and password match to any existing user"""
-        f = open('users.json', 'r')
-        data = json.loads(f.read())
-        for login in data['logins']:
-            if login['username'] == username and login['password'] == password:
-                self.window.destroy()
-                root = tkinter.Tk()
-                contactGUI = BookGUI(root)
-                root.mainloop()
-            else:
-                tkinter.Message("Error", "Incorrect username or Password")        
-    
-    def signUp(self, username, password):
+        try:
+            with open('users.json', 'r') as f:
+                data = json.loads(f)
+        except FileNotFoundError:
+            # show an error message if the file is not found
+            error_label = tk.Label(self, text="Error: the user database file was not found.")
+            error_label.pack(pady=5, padx=10)
+            return
+        except json.JSONDecodeError:
+            # show an error message if the file is not valid JSON
+            error_label = tk.Label(self, text="Error: the user database file contains invalid data.")
+            error_label.pack(pady=5, padx=10)
+            return
+
+        # check if the username and password match
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+
+        if username in data and data[username] == password:
+            # login successful, show the home page
+            self.controller.show_frame(StartPage)
+        else:
+            # login failed, show an error message
+            error_label = tk.Label(self, text="Incorrect username or password.")
+            error_label.pack(pady=5, padx=10)     
+            
+class SignUpPage(tk.Frame):  
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="Enter registration information:", font=LARGE_FONT)
+        label.pack(pady=10,padx=10)
+        
+        self.username = tk.Entry(self)
+        self.username.pack(pady=5, padx=10)
+
+        self.password = tk.Entry(self, show='*')
+        self.password.pack(pady=5, padx=10)
+        
+        signUp_button = tk.Button(self, text="Sign Up", command=self.signUp)
+        signUp_button.pack(pady=5, padx=10)
+        
+        alt_button = tk.Button(self, text="Log-In Page", command=lambda: controller.show_frame(LoginPage))
+        
+        alt_button.pack()
+        
+    def signUp(self):
         """Registers the login information into database unless username already exists
         """
-        with open('users.json') as f:
+        with open('users.json', 'r') as f:
             data = json.loads(f.read())
-        newUser = {"username": username, "password": password, "addressBook": []}
+            
+        newUser = {"username": self.username.get(), "password": self.password.get(), "addressBook": []}
         for login in data['logins']:
-            if login['username'] == username:
+            if login['username'] == self.username.get():
                 return None
         data['logins'].append(newUser)
         with open('users.json', 'w') as f:
            json.dump(data,f, indent=2)
            
-class BookGUI:
-    def __init__(self, window):
-        self.window = window
-        self.window.title("Contact Book")
-        
-    def widgets(self):
-        pass
+        success_label = tk.Label(self, text="User created successfully.")
+        success_label.pack(pady=5, padx=10)
 
 class Contact:
     """Defines an individual contact and the details that are included in the contact"""
@@ -144,7 +191,8 @@ def save_data():
     """
     pass
 
-MainApplication()
+app = Main()
+app.mainloop()
 
 #Tests to implement
 """
