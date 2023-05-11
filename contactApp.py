@@ -16,7 +16,7 @@ class Main(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, LoginPage, SignUpPage):
+        for F in (StartPage, LoginPage, SignUpPage, AddressBook):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -85,7 +85,7 @@ class LoginPage(tk.Frame):
         
         for login in data["logins"]:
             if login["username"] == username and login["password"] == password:
-                self.controller.show_frame(StartPage)
+                self.controller.show_frame(AddressBook)
 
         # login failed, show an error message
         error_label = tk.Label(self, text="Incorrect username or password.")
@@ -165,16 +165,41 @@ class Contact:
     
     pass
 
-class AddressBook:
+class AddressBook(tk.Frame):
     """Collection of contacts that belong to the corresponding user
     """
-    def __init__(self):
-        pass
-    
-    def sync_addressBook():
-        pass
-    
-    pass
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Contacts", font=LARGE_FONT)
+        label.pack(pady=10,padx=10)
+        
+        # Create a listbox to display the contacts
+        self.contact_list = tk.Listbox(self)
+        self.contact_list.pack(side="left", fill="both", expand=True)
+        
+        # Create a scrollbar for the listbox
+        scrollbar = tk.Scrollbar(self, orient="vertical")
+        scrollbar.config(command=self.contact_list.yview)
+        scrollbar.pack(side="right", fill="y")
+        self.contact_list.config(yscrollcommand=scrollbar.set)
+        
+        # Create buttons to add, edit and delete contacts
+        add_button = tk.Button(self, text="Add Contact", command=Contact.add_contact)
+        add_button.pack(side="top", pady=10)
+        edit_button = tk.Button(self, text="Edit Contact", command=Contact.edit_contact)
+        edit_button.pack(side="top", pady=10)
+        delete_button = tk.Button(self, text="Delete Contact", command=Contact.delete_contact)
+        delete_button.pack(side="top", pady=10)
+        
+        # Load the contacts from the user's address book
+        self.sync_contacts()
+        
+    def sync_contacts(self):
+        """ Load the user's address book from the database
+        """
+        with open('users.json', 'r') as f:
+            data = json.load(f)
 
 def parse_input():
     """Parses and matches the user input for searching contacts
