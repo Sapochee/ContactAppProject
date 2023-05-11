@@ -67,7 +67,7 @@ class LoginPage(tk.Frame):
         """Checks to see if username and password match to any existing user"""
         try:
             with open('users.json', 'r') as f:
-                data = json.loads(f)
+                data = json.loads(f.read())
         except FileNotFoundError:
             # show an error message if the file is not found
             error_label = tk.Label(self, text="Error: the user database file was not found.")
@@ -82,14 +82,14 @@ class LoginPage(tk.Frame):
         # check if the username and password match
         username = self.username_entry.get()
         password = self.password_entry.get()
+        
+        for login in data["logins"]:
+            if login["username"] == username and login["password"] == password:
+                self.controller.show_frame(StartPage)
 
-        if username in data and data[username] == password:
-            # login successful, show the home page
-            self.controller.show_frame(StartPage)
-        else:
-            # login failed, show an error message
-            error_label = tk.Label(self, text="Incorrect username or password.")
-            error_label.pack(pady=5, padx=10)     
+        # login failed, show an error message
+        error_label = tk.Label(self, text="Incorrect username or password.")
+        error_label.pack(pady=5, padx=10)     
             
 class SignUpPage(tk.Frame):  
     def __init__(self, parent, controller):
