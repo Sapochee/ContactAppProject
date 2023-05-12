@@ -128,41 +128,55 @@ class SignUpPage(tk.Frame):
         success_label.pack(pady=5, padx=10)
 
 class Contact:
-    """Defines an individual contact and the details that are included in the contact"""
-    def __init__(self, FirstName, LastName, number, address, email):
-        self.FirstName = FirstName
-        self.LastName = LastName
-        self.number = number
-        self.address = address
+    """A contact in an address book"""
+    def __init__(self, name, phone_number, email):
+        self.name = name
+        self.phone_number = phone_number
         self.email = email
-    
-    def add_contact(self, contact):
-        """Adds a contact to the list"""
-        contact.append(self)
-    
-    def edit_contact(self, contact, field, value):
-        """Edit a field of the contact with a new value"""
-        if field  == 'FirstName':
-            self.FirstName = value
-        elif field == 'LastName':
-            self.LastName = value
-        elif field == 'number':
-            self.number = value
-        elif field == 'address':
-            self.address = value
-        elif field == 'email':
-            self.email = value
-    
-    def delete_contact(self, contact):
-        """Delete the contact"""
-        contact.remove(self)
-    
-    def search_contact(self, query):
-        """Return True if the contact matches the query, False otherwise"""
-        return (query in self.first_name or query in self.last_name or
-                query in self.number or query in self.address or
-                query in self.email)
-    
+        
+    def __str__(self):
+        return f"Name: {self.name}, Phone: {self.phone_number}, Email: {self.email}"
+        
+    def add_contact():
+        """Adds a new contact"""
+        name = input("Enter the name of the contact: ")
+        phone_number = input("Enter the phone number of the contact: ")
+        email = input("Enter the email of the contact: ")
+        new_contact = Contact(name, phone_number, email)
+        address_book = AddressBook.get_instance()
+        address_book.add_contact(new_contact)
+        
+    def edit_contact():
+        """Edits an existing contact"""
+        name = input("Enter the name of the contact to edit: ")
+        address_book = AddressBook.get_instance()
+        contact = address_book.get_contact_by_name(name)
+        if contact:
+            print(f"Editing contact: {contact}")
+            new_name = input(f"Enter a new name for {name} (or press enter to keep as {name}): ")
+            new_phone_number = input(f"Enter a new phone number for {name} (or press enter to keep as {contact.phone_number}): ")
+            new_email = input(f"Enter a new email for {name} (or press enter to keep as {contact.email}): ")
+            if new_name:
+                contact.name = new_name
+            if new_phone_number:
+                contact.phone_number = new_phone_number
+            if new_email:
+                contact.email = new_email
+            address_book.save()
+        else:
+            print(f"Contact {name} not found.")
+
+    def delete_contact():
+        """Deletes an existing contact"""
+        name = input("Enter the name of the contact to delete: ")
+        address_book = AddressBook.get_instance()
+        contact = address_book.get_contact_by_name(name)
+        if contact:
+            print(f"Deleting contact: {contact}")
+            address_book.delete_contact(contact)
+            address_book.save()
+        else:
+            print(f"Contact {name} not found.")
     pass
 
 class AddressBook(tk.Frame):
