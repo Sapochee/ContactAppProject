@@ -83,6 +83,21 @@
           "phone_number": "123"
         }
       ]
+    },
+    {
+      "username": "new_username",
+      "password": "new_password",
+      "addressBook": []
+    },
+    {
+      "username": "existing_username",
+      "password": "existing_password",
+      "addressBook": []
+    },
+    {
+      "username": "123",
+      "password": "321",
+      "addressBook": []
     }
   ]
 }
