@@ -3,42 +3,82 @@
     {
       "username": "jacob123",
       "password": "Racoon45",
-      "addressBook": []
+      "addressBook": [
+        {
+          "name": "Test7", 
+          "phone": "1234567890"
+        }
+      ]
     },
     {
       "username": "adam28",
       "password": "Terrapin12",
-      "addressBook": []
+      "addressBook": [
+        {
+          "name": "Test6", 
+          "phone": "1234567890"
+        }
+      ]
     },
     {
       "username": "john88",
       "password": "UMD22",
-      "addressBook": []
+      "addressBook": [
+        {
+          "name": "Test5", 
+          "phone": "1234567890"
+        }
+      ]
     },
     {
       "username": "caleb87",
       "password": "Stamp832",
-      "addressBook": []
+      "addressBook": [
+        {
+          "name": "Test4", 
+          "phone": "1234567890"
+        }
+      ]
     },
     {
       "username": "John",
       "password": "BLAH",
-      "addressBook": []
+      "addressBook": [
+        {
+          "name": "Test3", 
+          "phone": "1234567890"
+        }
+      ]
     },
     {
       "username": "Nder",
       "password": "BLAH",
-      "addressBook": []
+      "addressBook": [
+        {
+          "name": "Tes2", 
+          "phone": "1234567890"
+        }
+      ]
     },
     {
       "username": "Jacob",
       "password": "Nadder123",
-      "addressBook": []
+      "addressBook": [
+        {
+          "name": "Test1", 
+          "phone": "1234567890"
+        }
+      ]
     },
     {
       "username": "testing",
       "password": "test123",
-      "addressBook": []
+      "addressBook": [
+        {
+          "name": "Test", 
+          "phone": "1234567890"
+        }
+      ]
     }
   ]
 }
