@@ -98,6 +98,11 @@
       "username": "123",
       "password": "321",
       "addressBook": []
+    },
+    {
+      "username": "tom",
+      "password": "1",
+      "addressBook": []
     }
   ]
 }
